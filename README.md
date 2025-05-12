@@ -32,9 +32,9 @@ If installed elsewhere, update the path in `ocr_processor.py`.
 ## 📂 Folder Structure
 
 \`\`\`
-/input_videos/              # Drop videos here
-/frames/{video_name}/       # Auto-generated frames
-/ocr_text/{label}/          # Output per label
+\\/input_videos/              # Drop videos here
+\\/frames/{video_name}/       # Auto-generated frames
+\\/ocr_text/{label}/          # Output per label
     ├── {label}_results.txt
     └── {label}_results.xlsx
 \`\`\`
