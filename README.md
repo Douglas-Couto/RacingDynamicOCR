@@ -1,67 +1,76 @@
-# RacingDynamicOCR
-Extract speed, lap time, and telemetry data from onboard racing videos using frame-by-frame OCR. Select regions with your mouse, label them (e.g. Speed), and get clean Excel outputs for data merging and analysis.
 # 🏁 Dynamic Racing OCR
 
-**Dynamic Racing OCR** is a Python-based tool that extracts telemetry-style data (speed, lap time, throttle) from onboard racing videos using frame-by-frame OCR and user-defined regions of interest.
+**Dynamic Racing OCR** is a Python-based tool that extracts telemetry-style data (speed, lap time, throttle) from onboard racing videos using frame-by-frame OCR and user-defined regions.
 
 ## 🚀 Features
 
 - Converts videos into individual frames
-- Interactive mouse-based region selection
+- Mouse-based selection of OCR regions
 - Prompts for label names (e.g., Speed, LapTime)
 - Saves results in both `.txt` and `.xlsx` formats
-- Allows merging of multiple outputs based on frame names
+- Output is organized by label and frame, ready for merging
 
 ## 📦 Requirements
 
-Install required Python packages:
+Install the required packages:
 
-\`\`\`bash
+```
 pip install opencv-python pillow pytesseract pandas
-\`\`\`
+```
 
 Also install [Tesseract-OCR for Windows](https://github.com/UB-Mannheim/tesseract/wiki)  
 and ensure it's installed at:
 
-\`\`\`
+```
 C:\Program Files\Tesseract-OCR\tesseract.exe
-\`\`\`
+```
 
 If installed elsewhere, update the path in `ocr_processor.py`.
 
 ## 📂 Folder Structure
 
-\`\`\`
-\\/input_videos/              # Drop videos here
-\\/frames/{video_name}/       # Auto-generated frames
-\\/ocr_text/{label}/          # Output per label
-    ├── {label}_results.txt
-    └── {label}_results.xlsx
-\`\`\`
+```
+/input_videos/              # Drop videos here
+/frames/{video_name}/       # Extracted frames per video
+/ocr_text/{label}/          # Output folder per field (e.g., Speed)
+/ocr_text/{label}/
+├── {label}_results.txt     # Raw CSV-style OCR output
+└── {label}_results.xlsx    # Excel file (one row per frame)
+```
 
-## ▶️ How to Run
+## ▶️ How to Run (Step-by-Step)
 
-\`\`\`bash
-python main.py
-\`\`\`
+1. Place a video file in the `/input_videos/` folder and open CMD making sure your prompt is in the right folder
+2. Run the program:
+   ```
+   python main.py
+   ```
+3. Select the frame number to use as reference (frame number 1 might be just black, so use something like 400
+4. Use your mouse to draw the crop region
+5. Enter a label name for the data (e.g., "Speed")
+6. OCR runs on all frames using the selected region
+7. Results are saved to:
+   ```
+   /ocr_text/{label}/{label}_results.xlsx
+   ```
 
-1. Drop a video file into `/input_videos/`
-2. Select which frame to use for cropping
-3. Draw a region with your mouse (e.g., speed or time box)
-4. Enter a label name when prompted
-5. Results will be saved in `/ocr_text/{label}/`
+## 📊 Output Example
 
-## 📊 How to Use the Output
+Each row in the result corresponds to a frame:
 
-- TXT and Excel files are generated for each label
-- Each row corresponds to one frame (e.g., `frame025.jpg`)
-- You can merge multiple `.xlsx` files by `IMGNAME` to create full logs
+```
+IMGNAME, TEXT
+frame000.jpg, 178
+frame001.jpg, 180
+frame002.jpg, 
+```
+
+Multiple labeled outputs can be joined using `IMGNAME` as the key.
 
 Example:
 
 | IMGNAME     | SPEED | LAPTIME |
 |-------------|--------|----------|
 | frame000.jpg | 178    | 0:00.45  |
-| frame001.jpg | 181    | 0:00.48  |
-
+| frame001.jpg | 180    | 0:00.48  |
 ---
